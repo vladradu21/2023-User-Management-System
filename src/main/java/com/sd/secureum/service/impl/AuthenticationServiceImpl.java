@@ -4,6 +4,7 @@ import com.sd.secureum.dto.LoginDTO;
 import com.sd.secureum.dto.RegisterDTO;
 import com.sd.secureum.dto.ResponseDTO;
 import com.sd.secureum.dto.UserDTO;
+import com.sd.secureum.exceptions.UmConflictException;
 import com.sd.secureum.mapper.RegisterMapper;
 import com.sd.secureum.mapper.UserMapper;
 import com.sd.secureum.model.ApplicationUser;
@@ -75,7 +76,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return new ResponseDTO(userMapper.toDTO(user), token);
 
         } catch (AuthenticationException e) {
-            return new ResponseDTO(null, "Invalid username or password");
+            throw new UmConflictException("Invalid username/password supplied");
         }
     }
 
