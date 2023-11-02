@@ -1,0 +1,19 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api/
+  error:
+    include-message: always
+
+spring:
+  application:
+    name: secure-user-management
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_IP:localhost}:3306/secureuserdb
+    username: root
+    password: ${MYSQL_ROOT_PASSWORD:admin}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQLDialect
