@@ -1,7 +1,10 @@
 package com.sd.secureum.dto;
 
+import com.sd.secureum.model.Role;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.util.Set;
 
 public record UserDTO(
         @NotNull
@@ -15,6 +18,8 @@ public record UserDTO(
 
         @Size(min = 3, max = 20)
         @NotNull
-        String username
+        String username,
+
+        Set<Role> authorities
 ) {
 }

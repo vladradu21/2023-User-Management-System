@@ -28,8 +28,8 @@ public class SecureUserManagementApplication {
 			if(roleRepository.findByAuthority("ADMIN").isPresent()) {
 				return;
 			}
-			Role adminRole = roleRepository.save(new Role("ADMIN"));
-			roleRepository.save(new Role("USER"));
+			Role adminRole = roleRepository.save(new Role(1,"ADMIN"));
+			roleRepository.save(new Role(2,"USER"));
 
 			Set<Role> roles = new HashSet<>();
 			roles.add(adminRole);

@@ -25,4 +25,11 @@ public class GlobalExceptionHandler {
     public ApiExceptionFormat handleUmConflictException(UmConflictException ex) {
         return buildResponseEntity(HttpStatus.CONFLICT, ex.getMessage());
     }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(UmNotFoundException.class)
+    public ApiExceptionFormat handleUmNotFoundException(UmNotFoundException ex) {
+        return buildResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
 }
