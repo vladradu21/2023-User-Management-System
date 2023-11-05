@@ -32,8 +32,8 @@ public class AdminController {
     }
 
     @PutMapping("/update")
-    public void update(@RequestBody UserDTO userDTO) {
-        applicationUserService.update(userDTO);
+    public UserDTO update(@RequestBody UserDTO userDTO) {
+        return applicationUserService.update(userDTO);
     }
 
     @DeleteMapping("/delete/{username}")
