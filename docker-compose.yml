@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: userdb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+      MYSQL_ROOT_PASSWORD: admin
+    ports:
+      - "3307:3306"
+    networks:
+      - ems-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8080"
+    depends_on:
+      - db
+    environment:
+      DB_IP: db
+      MYSQL_ROOT_PASSWORD: admin
+
+networks:
+  ems-network:
+    external: true
