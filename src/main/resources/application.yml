@@ -4,7 +4,6 @@ server:
     context-path: /api/
   error:
     include-message: always
-
 spring:
   application:
     name: user-management
@@ -12,7 +11,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${DB_IP:localhost}:3306/userdb
     username: root
-    password: ${MYSQL_ROOT_PASSWORD:admin}
+    password: admin
   jpa:
     hibernate:
       ddl-auto: update
