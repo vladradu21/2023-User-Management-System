@@ -10,7 +10,6 @@ import com.sd.usermanagement.repository.RoleRepository;
 import com.sd.usermanagement.repository.UserRepository;
 import com.sd.usermanagement.service.ApplicationUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -24,16 +23,14 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final RoleRepository roleRepository;
-    @Autowired
-    private WebClient webClient;
-    @Value("${devicemicroservice.port}")
-    private int device_port;
+    private final WebClient webClient;
 
     @Autowired
-    public ApplicationUserServiceImpl(UserRepository userRepository, UserMapper userMapper, RoleRepository roleRepository) {
+    public ApplicationUserServiceImpl(UserRepository userRepository, UserMapper userMapper, RoleRepository roleRepository, WebClient webClient) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.roleRepository = roleRepository;
+        this.webClient = webClient;
     }
 
     @Override
@@ -72,9 +69,9 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
         userRepository.findByUsername(username).ifPresent(userRepository::delete);
 
         webClient.delete()
-                .uri("http://localhost:" + device_port + "/api/users/delete/" + username)
+                .uri("users/delete/" + username)
                 .retrieve()
-                .bodyToMono(Void.class)
+                .toBodilessEntity()
                 .block();
     }
 }

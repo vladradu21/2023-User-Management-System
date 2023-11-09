@@ -17,7 +17,6 @@ services:
       - ems-network
 
   user-app:
-    hostname: user-management
     restart: on-failure
     depends_on:
       - userdb
@@ -31,6 +30,7 @@ services:
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
       - DEVICE_PORT=8001
+      - DEVICE_HOST=device-management
     networks:
       - ems-network
 

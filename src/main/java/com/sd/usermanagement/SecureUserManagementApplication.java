@@ -4,6 +4,7 @@ import com.sd.usermanagement.model.ApplicationUser;
 import com.sd.usermanagement.model.Role;
 import com.sd.usermanagement.repository.RoleRepository;
 import com.sd.usermanagement.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,7 +17,6 @@ import java.util.Set;
 
 @SpringBootApplication
 public class SecureUserManagementApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(SecureUserManagementApplication.class, args);
 	}
@@ -40,8 +40,12 @@ public class SecureUserManagementApplication {
 		};
 	}
 
+	@Value("${devicemicroservice.port}")
+	private int device_port;
+	@Value("${devicemicroservice.host}")
+	private String device_host;
 	@Bean
 	public WebClient webClient() {
-		return WebClient.builder().build();
+		return WebClient.builder().baseUrl("http://localhost:" + device_port + "/api").build();
 	}
 }

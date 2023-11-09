@@ -18,4 +18,5 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
 
 devicemicroservice:
+  host: ${DEVICE_HOST:localhost}
   port: ${DEVICE_PORT:8081}

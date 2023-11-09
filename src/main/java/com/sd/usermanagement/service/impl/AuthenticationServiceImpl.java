@@ -15,7 +15,6 @@ import com.sd.usermanagement.service.AuthenticationService;
 import com.sd.usermanagement.service.TokenService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -37,13 +36,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final RegisterMapper registerMapper;
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
-    @Autowired
-    private WebClient webClient;
-    @Value("${devicemicroservice.port}")
-    private int device_port;
+    private final WebClient webClient;
 
     @Autowired
-    public AuthenticationServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, UserMapper userMapper, RegisterMapper registerMapper, AuthenticationManager authenticationManager, TokenService tokenService) {
+    public AuthenticationServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, UserMapper userMapper, RegisterMapper registerMapper, AuthenticationManager authenticationManager, TokenService tokenService, WebClient webClient) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -51,6 +47,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.registerMapper = registerMapper;
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
+        this.webClient = webClient;
     }
 
 
@@ -68,9 +65,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         ApplicationUser savedUser = userRepository.save(userToSave);
 
         webClient.post()
-                .uri("http://localhost:" + device_port + "/api/users/" + savedUser.getUsername())
+                .uri("/users/" + savedUser.getUsername())
                 .retrieve()
-                .bodyToMono(String.class)
+                .bodyToMono(Void.class)
                 .block();
 
         return userMapper.toDTO(savedUser);
