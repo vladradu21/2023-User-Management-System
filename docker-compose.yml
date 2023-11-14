@@ -12,12 +12,13 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: admin
-      DEVICE_PORT: 8001
+      DEVICE_PORT: 8081
       DEVICE_HOST: device-management
     networks:
       - ems-network
 
   user-app:
+    hostname: user-management
     restart: on-failure
     depends_on:
       - userdb
@@ -30,7 +31,7 @@ services:
       - DB_IP=userdb
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
-      - DEVICE_PORT=8001
+      - DEVICE_PORT=8081
       - DEVICE_HOST=device-management
     networks:
       - ems-network
