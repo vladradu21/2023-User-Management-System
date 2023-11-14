@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -46,6 +47,12 @@ public class SecureUserManagementApplication {
 	private String device_host;
 	@Bean
 	public WebClient webClient() {
-		return WebClient.builder().baseUrl("http://localhost:" + device_port + "/api").build();
+		String baseUrl = UriComponentsBuilder.fromUriString("http://" + device_host + ":")
+				.port(device_port)
+				.path("/api")
+				.build()
+				.toUriString();
+
+		return WebClient.builder().baseUrl(baseUrl).build();
 	}
 }

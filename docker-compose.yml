@@ -13,6 +13,7 @@ services:
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: admin
       DEVICE_PORT: 8001
+      DEVICE_HOST: device-management
     networks:
       - ems-network
 
