@@ -29,8 +29,6 @@ services:
       - "8000:8080"
     environment:
       - DB_IP=userdb
-      - MYSQL_USER=user
-      - MYSQL_PASSWORD=password
       - DEVICE_PORT=8081
       - DEVICE_HOST=device-management
     networks:
