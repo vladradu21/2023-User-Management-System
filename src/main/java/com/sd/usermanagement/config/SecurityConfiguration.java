@@ -55,13 +55,11 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/auth/**").permitAll()
-                            .requestMatchers("/admin/**").hasRole("ADMIN")
-                            .requestMatchers("/users/**").hasAnyRole("ADMIN", "USER")
-                            .anyRequest()
-                            .authenticated();
-                })
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**", "/auth/public").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/users/**").hasAnyRole("ADMIN", "USER")
+                        .anyRequest()
+                        .authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt
                                 .jwtAuthenticationConverter(jwtAuthenticationConverter())
