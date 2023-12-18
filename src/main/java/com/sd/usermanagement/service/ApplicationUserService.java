@@ -14,5 +14,5 @@ public interface ApplicationUserService {
 
     UserDTO update(UserDTO userDTO);
 
-    void delete(String username);
+    void delete(String username, String token);
 }

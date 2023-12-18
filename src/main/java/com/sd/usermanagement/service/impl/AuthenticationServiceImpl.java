@@ -65,7 +65,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         ApplicationUser savedUser = userRepository.save(userToSave);
 
         webClient.post()
-                .uri("/users/" + savedUser.getUsername())
+                .uri("/auth/" + savedUser.getUsername())
                 .retrieve()
                 .bodyToMono(Void.class)
                 .block();

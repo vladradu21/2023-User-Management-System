@@ -65,13 +65,14 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     }
 
     @Override
-    public void delete(String username) {
-        userRepository.findByUsername(username).ifPresent(userRepository::delete);
-
+    public void delete(String username, String token) {
         webClient.delete()
-                .uri("users/delete/" + username)
+                .uri("/users/delete/" + username)
+                .headers(headers -> headers.setBearerAuth(token))
                 .retrieve()
                 .toBodilessEntity()
                 .block();
+
+        userRepository.findByUsername(username).ifPresent(userRepository::delete);
     }
 }
